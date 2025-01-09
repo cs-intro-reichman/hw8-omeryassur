@@ -1,3 +1,5 @@
+
+
 /** Represents a social network. The network has users, who follow other uesrs.
  *  Each user is an instance of the User class. */
 public class Network {
@@ -29,7 +31,7 @@ public class Network {
      *  If there is no such user, returns null.
      *  Notice that the method receives a String, and returns a User object. */
     public User getUser(String name) {
-       for (int i=0; i<users.length; i++) {
+       for (int i=0; i<userCount; i++) {
         if (name.equals(users[i].getName())) {
             return users[i];
         }
@@ -59,23 +61,45 @@ public class Network {
      *  If any of the two names is not a user in this network,
      *  or if the "follows" addition failed for some reason, returns false. */
     public boolean addFollowee(String name1, String name2) {
-        //// Replace the following statement with your code
-        return false;
+            if (getUser(name1)==null || getUser(name2)==null) {
+               return false; 
+            }
+            if (name1 == null || name2 == null) {
+                return false;
+            }
+            if (name1.equals(name2)) {
+                return false;
+            }
+           return getUser(name1).addFollowee(name2);     
     }
     
     /** For the user with the given name, recommends another user to follow. The recommended user is
      *  the user that has the maximal mutual number of followees as the user with the given name. */
     public String recommendWhoToFollow(String name) {
-        //// Replace the following statement with your code
-        return null;
-    }
+        User currentUser = getUser(name);    
+        User mostRecommendedUserToFollow = null;
+        if (name == null) return null;
+        if (currentUser == null) return null;
+        
+        int maxMutual=0;
+            
+        for (int i=0; i<userCount; i++) {
+                if (users[i].getName().equals(currentUser.getName())) {
+                    continue;
+                }
+               if (users[i].countMutual(getUser(name))>maxMutual) {
+                mostRecommendedUserToFollow=users[i];
+               }
+            }
+        return mostRecommendedUserToFollow.getName();
+        }
+     
+    
 
     /** Computes and returns the name of the most popular user in this network: 
      *  The user who appears the most in the follow lists of all the users. */
-    public String mostPopularUser() {
-        //// Replace the following statement with your code
-        return null;
-    }
+    // public String mostPopularUser() {
+    // }
 
     /** Returns the number of times that the given name appears in the follows lists of all
      *  the users in this network. Note: A name can appear 0 or 1 times in each list. */
