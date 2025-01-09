@@ -87,8 +87,9 @@ public class Network {
                 if (users[i].getName().equals(currentUser.getName())) {
                     continue;
                 }
-               if (users[i].countMutual(getUser(name))>maxMutual) {
+               if (users[i].countMutual(getUser(name)) > maxMutual) {
                 mostRecommendedUserToFollow=users[i];
+                maxMutual=users[i].countMutual(getUser(name));
                }
             }
         return mostRecommendedUserToFollow.getName();
@@ -130,7 +131,7 @@ public class Network {
 
     // Returns a textual description of all the users in this network, and who they follow.
     public String toString() {
-       String description="Network";
+       String description="Network:";
        for (int i = 0; i < userCount; i++) {
         description=description + "\n" + users[i].toString();        
        }
